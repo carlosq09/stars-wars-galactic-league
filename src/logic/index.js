@@ -31,24 +31,37 @@ const recursiveFetchByPage = async (uri, elementsArray = [], index = 1) => {
 
 const logic = {
 
-    removeFromLeagueInStorage(target){
-        if(!target) throw new Error('missing target to remove in storage')
-        localStorage.removeItem(target)
+    removeFromLeagueInStorage(target) {
+        if (!target) throw new Error('missing target to remove in storage')
+
+        const storedTargets = localStorage.getItem('galactic')
+        if (!storedTargets || !storedTargets.length) throw new Error('no element in storage to remove in storage')
+
+        const newStoredTargets = JSON.parse(storedTargets).filter(storedTarget => storedTarget !== target)
+        localStorage.setItem('galactic', JSON.stringify(newStoredTargets))
+
+        return newStoredTargets
     },
 
-    setLeagueInStorage(targets){
-        if(!targets || !targets.length) throw new Error('missing targets to set in storage')
-        targets.forEach(target => {
-            const { url } = target
-            
-            localStorage[url] = url
+    setToLeagueInStorage(target) {
+        if (!target) throw new Error('missing target to add in storage')
+
+        const storedTargets = JSON.parse(localStorage.getItem('galactic')) || [] //if empty
+
+        storedTargets.push(target)
+        localStorage.setItem('galactic', JSON.stringify(storedTargets))
+
+        return storedTargets
+    },
+
+    getLeagueFromStorage(targets) {
+        const storedTargets = JSON.parse(localStorage.getItem('galactic')) || [];
+
+        if(!targets) return storedTargets
+
+        return storedTargets.map(storedTarget => {
+            return targets.find(target => target.url === storedTarget)
         })
-        localStorage.setItem('galacticIndex', JSON.stringify(targets));
-    },
-
-    getLeagueFromStorage(){
-        const targets = localStorage.get('galactic');
-        return JSON.parse(targets)
     },
 
     async requestTargets(fetchNumber, elements = [], totalPages) {
@@ -57,7 +70,7 @@ const logic = {
         return [...elements, ...newTargets]
     },
 
-    async requestAllTargers() {
+    async requestAllTargets() {
         return await recursiveFetchByPage('https://swapi.dev/api/people/').then(results => results)
 
     },
@@ -75,7 +88,7 @@ const logic = {
     },
 
     async getElementByUrl(uri) {
-        if(!uri) throw new Error('missing uri to request')
+        if (!uri) throw new Error('missing uri to request')
 
         return await fetch(uri)
             .then(response => {
@@ -83,29 +96,29 @@ const logic = {
             })
     },
 
-    characterIsSpecie(specie, toCompare){
-        if(!specie.length && toCompare == 'http://swapi.dev/api/species/1/') return true //Humans from the API doesnt have specie for unknow reason
+    characterIsSpecie(specie, toCompare) {
+        if (!specie.length && toCompare == 'http://swapi.dev/api/species/1/') return true //Humans from the API doesnt have specie for unknow reason
 
         return specie[0] == toCompare
-         
+
     },
 
-    characterHasStarship(starships, toCompare){
-        if(!starships.length || starships.length < 1) return false
+    characterHasStarship(starships, toCompare) {
+        if (!starships.length || starships.length < 1) return false
 
-        return starships.some(starship => starship === toCompare) 
-         
+        return starships.some(starship => starship === toCompare)
+
     },
 
     filterCharactersBy(planet, specie, starship, characters) {
-        if(!characters) throw new Error('missing characters to filter')
-        if(!planet && !specie && !starship) return characters
-debugger
+        if (!characters) throw new Error('missing characters to filter')
+        if (!planet && !specie && !starship) return characters
+        debugger
         return characters.filter(character => {
 
-            if(starship && (!this.characterHasStarship(character.starships, starship))) return
-            if(specie && (!this.characterIsSpecie(character.species, specie))) return
-            if(planet && (planet !== character.homeworld)) return
+            if (starship && (!this.characterHasStarship(character.starships, starship))) return
+            if (specie && (!this.characterIsSpecie(character.species, specie))) return
+            if (planet && (planet !== character.homeworld)) return
             return character
         })
     }

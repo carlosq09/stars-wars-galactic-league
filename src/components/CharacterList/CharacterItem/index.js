@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logic from '../../../logic'
+import { ReactComponent as Logo } from '../../../static/icons/Star_Wars_Boba.svg'
 import './index.scss'
 
 function ItemCharacter({ handleAddOrRemoveLeague, character }) {
@@ -7,12 +8,16 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
   const [vehicles, setVehicle] = useState([])
   const [specie, setSpecie] = useState([])
   const [planet, setPlanet] = useState()
-
   const [isTarget, setIsTarget] = useState(false)
+
+  const isCharacterInLeague = (character) => {
+    const storedLeague = logic.getLeagueFromStorage();
+    return storedLeague.some(storedCharacter => storedCharacter === character.url)
+  }
+
 
   useEffect(() => {
     async function fetchData() {
-
       if (character.homeworld) {
         await logic.getElementByUrl(character.homeworld).then(characterPlanet => {
           setPlanet(characterPlanet.name)
@@ -46,6 +51,9 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
           setSpecie(specie)
         }
       }
+
+      const leagueStatus = isCharacterInLeague(character)
+      setIsTarget(leagueStatus)
     }
     fetchData()
   }, [character])
@@ -56,16 +64,18 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
   }
 
   return <li className="card">
-    <h2>{character.name}</h2>
+    <div className="card__header">
+      <h2>{character.name}</h2>
+      <div onClick={() => AddToGalactic()}><Logo stroke={isTarget ? '#0ff' : '#173131'} /></div>
+    </div>
     {specie && <div className="character-specie">
       <h3>Specie:</h3>
       <p>{specie}</p>
     </div>}
-
-    <p>Height: {character.height}</p>
-    <p>Birth Year: {character.birth_year}</p>
-    <p>Gender {character.gender}</p>
-    {planet && <div>Homeworld: {planet}</div>}
+    <p><strong>Height: </strong>{character.height}</p>
+    <p><strong>Birth Year: </strong>{character.birth_year}</p>
+    <p><strong>Gender: </strong>{character.gender}</p>
+    {planet && <p><strong>Homeworld: </strong>{planet}</p>}
     {starship.length > 0 && <div className="character-starships">
       <h3>StarShips:</h3>
       <ul>
@@ -78,7 +88,6 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
         {vehicles.map(vehicle => <li>{vehicle}</li>)}
       </ul>
     </div>}
-    <button onClick={() => AddToGalactic()}>{isTarget ? 'Remove target' : 'Add target to Galactic'}</button>
   </li>
 }
 

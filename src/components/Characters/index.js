@@ -3,21 +3,18 @@ import { withRouter } from 'react-router-dom'
 import logic from '../../logic'
 import CharacterList from '../CharacterList'
 import CharacterFilter from '../CharacterFilter'
+
+import GalacticLeague from "../GalacticLeague";
 import './index.scss'
 
-function Characters({ handleAddOrRemoveLeague, initialResults }) {
+function Characters({ league, handleAddOrRemoveLeague, initialResults }) {
   const [characters, setCharacters] = useState([])
   const [filtered, setFiltered] = useState(null)
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    async function fetchData() {
-      await logic.requestAllTargers().then((results) => {
-        setCharacters(results)
-      })
-    }
-    fetchData();
-  }, [])
+    setCharacters(initialResults)
+  }, [initialResults])
 
 
   const handleNextPagination = async () => {
@@ -40,17 +37,17 @@ function Characters({ handleAddOrRemoveLeague, initialResults }) {
     setIndex(index - 9 <= 0 ? 0 : index - 9)
   }
 
-  return <div>
-    <button onClick={() => handlePrevPagination()}>prev characters</button>
-    <button onClick={() => handleNextPagination()}>next characters</button>
-    <div class="characters-page">
+  return <div className="characters-page">
+    <div className="characters-page__characters">
       <CharacterFilter handleFilter={handleFilter} />
       <CharacterList
+        handleNextPagination={handleNextPagination}
+        handlePrevPagination={handlePrevPagination}
         handleAddOrRemoveLeague={handleAddOrRemoveLeague}
         items={filtered ? filtered : [...characters].slice(index, index + 9)}
       />
     </div>
-
+    <GalacticLeague targets={league} />
   </div>
 }
 

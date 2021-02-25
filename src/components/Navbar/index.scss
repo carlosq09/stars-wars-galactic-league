@@ -1,18 +1,17 @@
 .navbar{
-    position: -webkit-sticky; /* Safari */
+    width: 100vw;
+    position: -webkit-sticky; 
     position: sticky;
     top: 0;
 }
 
 .navbar__list{
+    height: 10vh;
     background-color: black;
-    padding: 20px;
-    width: 100vw;
     display: flex;
     margin: 0;
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
-    width: 100vw
 }
 

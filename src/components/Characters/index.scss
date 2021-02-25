@@ -1,0 +1,21 @@
+.characters-page {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+}
+
+.pagination button{
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    border: 1px solid #0ff;
+    background: #0ff
+}

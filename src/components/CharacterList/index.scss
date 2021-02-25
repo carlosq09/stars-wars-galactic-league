@@ -1,6 +1,21 @@
+.characters-pagination{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 85vh;
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
+    overflow: scroll;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 10vw;
+}
+
 .character-list{
     display: flex;
     flex-wrap: wrap;
-    margin-left: 10vw;
-    margin-right: 10vw;
+}
+
+.characters-pagination::-webkit-scrollbar{
+    display: none;
 }

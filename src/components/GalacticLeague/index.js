@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import './index.scss'
 
 const GalacticLeague = ({ targets }) => {
 
     return (
-        <div className="sidebar">
+        <div className="galactic-league">
             GALACTIC LEAGUE
-            <ul className="siidebar__list">
+            <ul className="sidebar__list">
                 {targets.length > 0 && targets.map(target => {
                     debugger
                     return <div>{target.name}</div>
@@ -15,5 +16,4 @@ const GalacticLeague = ({ targets }) => {
         </div>)
 }
 
-
-export default GalacticLeague
+export default withRouter(GalacticLeague)
