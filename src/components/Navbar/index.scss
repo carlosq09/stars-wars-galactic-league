@@ -1,0 +1,18 @@
+.navbar{
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.navbar__list{
+    background-color: black;
+    padding: 20px;
+    width: 100vw;
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100vw
+}
+
