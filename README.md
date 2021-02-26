@@ -40,7 +40,7 @@ The characters section load each character of the api, using the paged endpoint 
 
 In the Species section you can see the Species from the movies (TODO character search at click)
 
-![Species](/doc/images/Species.png)
+![Species](/doc/images/species.png)
 
 In the Planets section you can see the Planets from the movies (TODO character search at click)
 
