@@ -12,15 +12,19 @@ const multiFetch = async (times, startIndex = 1, end = 100) => {
     return Promise.all(elementsArray)
 }
 
-const recursiveFetchByPage = async (uri, elementsArray = [], index = 1) => {
+const recursiveFetchByPage = async (uri, paginated, elementsArray = [], index = 1) => {
     return fetch(`${uri}?page=${index}`)
         .then(response => {
             return response.json().then((response) => {
                 if (response.results) {
-                    elementsArray = [...elementsArray, ...response.results]
+                    if (paginated) {
+                        elementsArray = [...elementsArray, response.results]
+                    } else {
+                        elementsArray = [...elementsArray, ...response.results]
+                    }
                 }
                 if (!!response.next) {
-                    return recursiveFetchByPage(uri, elementsArray, ++index)
+                    return recursiveFetchByPage(uri, paginated, elementsArray, ++index)
                 } else {
                     return elementsArray
                 }
@@ -54,14 +58,15 @@ const logic = {
         return storedTargets
     },
 
-    getLeagueFromStorage(targets) {
+    getLeagueFromStorage(pages) {
         const storedTargets = JSON.parse(localStorage.getItem('galactic')) || [];
+        if (!pages) return storedTargets
 
-        if(!targets) return storedTargets
+        let allResults = []
+        pages.forEach(page => allResults = allResults.concat(page))
 
-        return storedTargets.map(storedTarget => {
-            return targets.find(target => target.url === storedTarget)
-        })
+        debugger
+        return storedTargets.map(storedTarget => allResults.find(target => target.url === storedTarget))
     },
 
     async requestTargets(fetchNumber, elements = [], totalPages) {
@@ -70,21 +75,21 @@ const logic = {
         return [...elements, ...newTargets]
     },
 
-    async requestAllTargets() {
-        return await recursiveFetchByPage('https://swapi.dev/api/people/').then(results => results)
+    async requestAllTargets(paginated) {
+        return await recursiveFetchByPage('https://swapi.dev/api/people/', paginated).then(results => results)
 
     },
 
-    async requestAllPlanets() {
-        return await recursiveFetchByPage('https://swapi.dev/api/planets/').then(results => results)
+    async requestAllPlanets(paginated) {
+        return await recursiveFetchByPage('https://swapi.dev/api/planets/', paginated).then(results => results)
     },
 
-    async requestAllStarships() {
-        return await recursiveFetchByPage('https://swapi.dev/api/starships/').then(results => results)
+    async requestAllStarships(paginated) {
+        return await recursiveFetchByPage('https://swapi.dev/api/starships/', paginated).then(results => results)
     },
 
-    async requestAllSpecies() {
-        return await recursiveFetchByPage('https://swapi.dev/api/species/').then(results => results)
+    async requestAllSpecies(paginated) {
+        return await recursiveFetchByPage('https://swapi.dev/api/species/', paginated).then(results => results)
     },
 
     async getElementByUrl(uri) {
@@ -110,10 +115,12 @@ const logic = {
 
     },
 
-    filterCharactersBy(planet, specie, starship, characters) {
-        if (!characters) throw new Error('missing characters to filter')
+    filterCharactersBy(planet, specie, starship, pages) {
+        if (!pages) throw new Error('missing pages to filter')
+        let characters = []
+        pages.forEach(page => characters = characters.concat(page))
+
         if (!planet && !specie && !starship) return characters
-        debugger
         return characters.filter(character => {
 
             if (starship && (!this.characterHasStarship(character.starships, starship))) return

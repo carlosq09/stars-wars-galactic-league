@@ -14,7 +14,7 @@ function CharacterFilter({ handleFilter }) {
     useEffect(() => {
         async function fetchData() {
             await logic.requestAllPlanets().then((results) => {
-                    setPlanets(results)
+                setPlanets(results)
             })
 
             await logic.requestAllStarships().then((results) => {
@@ -28,7 +28,8 @@ function CharacterFilter({ handleFilter }) {
         fetchData();
     }, [])
 
-    useEffect(() => {        handleFilter(selectedPlanet, selectedSpecie, selectedStarship)
+    useEffect(() => {
+        handleFilter(selectedPlanet, selectedSpecie, selectedStarship)
     }, [selectedPlanet, selectedStarship, selectedSpecie])
 
     const addSelection = (e) => {

@@ -16,7 +16,9 @@ const GalacticLeague = ({ handleSetOrRemoveFromLeague, targets }) => {
             {targets.length > 0 && targets.map(target =>
                 <li className="galactic-target">
                     <h2>{target.name}</h2>
-                    <div onClick={() => handleSetOrRemoveFromLeague(target, true)}>X</div>
+                    <div className="galactic-target__remove" onClick={() => handleSetOrRemoveFromLeague(target, true)}>
+                        <strong>X</strong>
+                    </div>
                 </li>
             )}
 

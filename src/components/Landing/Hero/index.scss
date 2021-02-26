@@ -51,30 +51,14 @@
     }
     
     .hero__text{
-        width: 40vw;
-        color: white;
         font-size: 10px;
         line-height: 2vh;
         letter-spacing: 3px;
-        font-family: 'Quicksand', sans-serif;
     }
     
     .hero__button {
-        color: black;
         margin: 10px;
         width: 30vw;
-        padding: 12px 12px;
-        font-family: 'Quicksand', sans-serif;
         font-size: 10px;
-        cursor: pointer;
-        border: 0 none;
-        border-radius: 36px;
-        box-shadow: 2px 5px 10px var(#353866);
-        
-        &:hover {
-            transition: all 150ms linear;
-        
-            opacity: .85;
-        }
     }
 }

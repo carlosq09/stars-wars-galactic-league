@@ -8,7 +8,7 @@ import StarshipItem from '../components/StarshipItem'
 import CollectionPage from '../components/CollectionPage'
 import Landing from "../components/Landing";
 import Navbar from "../components/Navbar";
-import Background from '../components/Landing/Background'
+import Background from '../components/Background'
 import Video from '../static/videos/Landing.mp4'
 
 import './index.scss'
@@ -19,7 +19,6 @@ function App() {
   const [league, setLeague] = useState([])
 
   const handleSetOrRemoveFromLeague = (character, isAdded) => {
-    debugger
     if (isAdded) {
       logic.removeFromLeagueInStorage(character.url)
       setLeague(league.filter(target => target.url !== character.url))
@@ -31,7 +30,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      await logic.requestAllTargets().then((results) => {
+      await logic.requestAllTargets(true).then((results) => {
         setResults(results)
 
         const storedLeague = logic.getLeagueFromStorage(results)
@@ -49,19 +48,19 @@ function App() {
     <Background src={Video} />
     <Switch>
       <Route exact path="/" render={() => <Landing />} />
-      <Route exact path="/planets" render={() => <CollectionPage
+      <Route exact path="/planets/:page" render={() => <CollectionPage
         getItemsFunction={logic.requestAllPlanets}
         itemEntity={PlanetItem} />} />
-        
-      <Route exact path="/species" render={() => <CollectionPage
+
+      <Route exact path="/species/:page" render={() => <CollectionPage
         getItemsFunction={logic.requestAllSpecies}
         itemEntity={SpecieItem} />} />
 
-      <Route exact path="/starships" render={() => <CollectionPage
+      <Route exact path="/starships/:page" render={() => <CollectionPage
         getItemsFunction={logic.requestAllStarships}
         itemEntity={StarshipItem} />} />
 
-      <Route exact path="/characters" render={() =>
+      <Route exact path="/characters/:page" render={() =>
         <Characters
           league={league}
           handleAddOrRemoveLeague={handleSetOrRemoveFromLeague}

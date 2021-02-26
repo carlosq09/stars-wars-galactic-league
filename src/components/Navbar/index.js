@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import logo from '../../static/images/logo.png'
 import GalacticLeague from '../GalacticLeague'
 import NavItem from './NavItem'
@@ -13,10 +13,10 @@ const Navbar = ({ handleSetOrRemoveFromLeague, league }) => {
         <NavItem path={'/'} >
           <img className='navbar-item__logo' src={logo} />
         </NavItem>
-        <NavItem label={'SPECIES'} path={'/species'} />
-        <NavItem label={'PERSONAJES'} path={'/characters'} />
-        <NavItem label={'PLANETAS'} path={'/planets'} />
-        <NavItem label={'STARSHIPS'} path={'/starships'} />
+        <NavItem label={'SPECIES'} path={'/species/0'} />
+        <NavItem label={'PERSONAJES'} path={'/characters/0'} />
+        <NavItem label={'PLANETAS'} path={'/planets/0'} />
+        <NavItem label={'STARSHIPS'} path={'/starships/0'} />
         <li className="navbar-item" onClick={() => setToggeGalactic(!toggleGalactic)}>LEAGUE</li>
       </ul>
       {toggleGalactic && <GalacticLeague

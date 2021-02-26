@@ -1,38 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, useParams } from 'react-router-dom'
 import CollectionPageList from '../CollectionPageList'
 import './index.scss'
 
-function CollectionPage({ getItemsFunction, itemEntity }) {
+function CollectionPage({ getItemsFunction, itemEntity, match:{ path:paginationPath} }) {
   const [items, setItems] = useState([])
-  const [index, setIndex] = useState(0)
+  const { page } = useParams()
 
   useEffect(() => {
     async function fetchData() {
-      await getItemsFunction().then((results) => {
+      await getItemsFunction(true).then((results) => {
+        debugger
         setItems(results)
       })
     }
     fetchData();
   }, [getItemsFunction])
 
-  const handleNextPagination = async () => {
-    if (index + 9 < items.length) {
-      setIndex(index + 9)
-    }
-  }
-
-  const handlePrevPagination = async () => {
-    setIndex(index - 9 <= 0 ? 0 : index - 9)
-  }
-
   return <div>
     <div class="collection-items-page">
       <CollectionPageList
         itemEntity={itemEntity}
-        handleNextPagination={handleNextPagination}
-        handlePrevPagination={handlePrevPagination}
-        items={[...items].slice(index, index + 9)}
+        paginationPath={paginationPath}
+        items={items}
+        page={page}
       />
     </div>
 

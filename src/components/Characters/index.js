@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, useParams } from 'react-router-dom'
 import logic from '../../logic'
 import CharacterList from '../CharacterList'
 import CharacterFilter from '../CharacterFilter'
 
-import GalacticLeague from "../GalacticLeague";
 import './index.scss'
 
-function Characters({ handleAddOrRemoveLeague, initialResults }) {
+function Characters({ handleAddOrRemoveLeague, initialResults}) {
   const [characters, setCharacters] = useState([])
   const [filtered, setFiltered] = useState(null)
-  const [index, setIndex] = useState(0)
+  const { page } = useParams()
 
   useEffect(() => {
     setCharacters(initialResults)
   }, [initialResults])
 
 
-  const handleNextPagination = async () => {
-    if (index + 9 < characters.length) {
-      setIndex(index + 9)
-    }
-  }
-
   const handleFilter = (planet, specie, starship) => {
-    debugger
     if (!planet && !specie && !starship) {
       setFiltered(null)
     } else {
@@ -33,18 +25,15 @@ function Characters({ handleAddOrRemoveLeague, initialResults }) {
     }
   }
 
-  const handlePrevPagination = async () => {
-    setIndex(index - 9 <= 0 ? 0 : index - 9)
-  }
-
   return <div className="characters-page">
     <div className="characters-page__characters">
       <CharacterFilter handleFilter={handleFilter} />
       <CharacterList
-        handleNextPagination={handleNextPagination}
-        handlePrevPagination={handlePrevPagination}
         handleAddOrRemoveLeague={handleAddOrRemoveLeague}
-        items={filtered ? filtered : [...characters].slice(index, index + 9)}
+        page={page}
+        totalItems={characters}
+        filtered={!!filtered}
+        items={filtered? filtered : characters[page]}
       />
     </div>
   </div>

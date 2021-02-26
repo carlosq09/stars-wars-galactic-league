@@ -4,16 +4,21 @@ import logic from '../../logic'
 import ItemCharacter from './CharacterItem'
 import './index.scss'
 
-function CharacterList({ handlePrevPagination, handleNextPagination, handleAddOrRemoveLeague, items }) {
+function CharacterList({ handleAddOrRemoveLeague, history, totalItems, filtered, items, page }) {
+
     return (<div className="characters-pagination">
 
-        <div className="pagination">
-            <button onClick={() => handlePrevPagination()}>{'<'}</button>
-            <button onClick={() => handleNextPagination()}>{'>'}</button>
-        </div>
+        {!filtered && <div className="pagination">
+            {totalItems.map((item, index) =>
+                <button disabled={index === parseInt(page)} onClick={() =>{
+                    history.push(`/characters/${index}/`)
+                }}>{index}</button>
+            )}
+        </div>}
         <ul className="character-list">
             {
-                items.length > 0 && items.map((item, index) => {
+                totalItems.length > 0 && items.map((item, index) => {
+                    debugger
                     return <ItemCharacter
                         handleAddOrRemoveLeague={handleAddOrRemoveLeague}
                         key={index}
@@ -22,10 +27,13 @@ function CharacterList({ handlePrevPagination, handleNextPagination, handleAddOr
                 })
             }
         </ul>
-        <div className="pagination">
-            <button onClick={() => handlePrevPagination()}>{'<'}</button>
-            <button onClick={() => handleNextPagination()}>{'>'}</button>
-        </div>
+        {!filtered && <div className="pagination">
+            {totalItems.map((item, index) =>
+                <button disabled={index === parseInt(page)} onClick={() =>{
+                    history.push(`/characters/${index}/`)
+                }}>{index}</button>
+            )}
+        </div>}
     </div>
 
     )

@@ -12,6 +12,7 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
 
   const isCharacterInLeague = (character) => {
     const storedLeague = logic.getLeagueFromStorage();
+    debugger
     return storedLeague.some(storedCharacter => storedCharacter === character.url)
   }
 
@@ -47,7 +48,6 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
           setSpecie('Human')
         } else {
           const specie = await logic.getElementByUrl(character.species[0]).then(characterSpecie => characterSpecie.name)
-          debugger
           setSpecie(specie)
         }
       }
@@ -55,6 +55,7 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
       const leagueStatus = isCharacterInLeague(character)
       setIsTarget(leagueStatus)
     }
+    debugger
     fetchData()
   }, [character])
 
@@ -77,7 +78,7 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
       </div>
       <div className="card__toggle" onClick={() => AddToGalactic()}>
         <p>league status</p>
-        <Logo  stroke={isTarget ? '#0ff' : '#173131'} />
+        <Logo stroke={isTarget ? '#0ff' : '#173131'} />
       </div>
     </div>
     <div className="card__list">

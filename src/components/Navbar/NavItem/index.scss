@@ -2,7 +2,7 @@
 
 .navbar-item {
     list-style: none;
-    font-size: 0.7em;
+    font-size: 1.2em;
     font-family: 'Oswald', sans-serif;
     font-weight:bold;
     color: white;
@@ -16,4 +16,11 @@
     font-weight:bold;
     color: white;
     cursor: pointer;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .navbar-item {
+        font-size: 0.7em;
+    }
 }

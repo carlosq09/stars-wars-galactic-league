@@ -2,16 +2,20 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import './index.scss'
 
-function CollectionPageList({ handlePrevPagination, handleNextPagination, itemEntity:ListItem ,items }) {
+function CollectionPageList({ history, itemEntity: ListItem, items, page, paginationPath }) {
+
     return (
         <div className="collection-list-pagination">
             <div className="pagination">
-                <button onClick={() => handlePrevPagination()}>{'<'}</button>
-                <button onClick={() => handleNextPagination()}>{'>'}</button>
+                {items.map((item, index) =>
+                    <button disabled={index === parseInt(page)} onClick={() => {
+                        history.push(paginationPath.replace(':page', index))
+                    }}>{index}</button>
+                )}
             </div>
             <ul className="collection-list">
                 {
-                    items.length > 0 && items.map((item, index) => <ListItem
+                    items.length > 0 && items[page].map((item, index) => <ListItem
                         key={index}
                         item={item}
                     ></ListItem>
@@ -19,8 +23,11 @@ function CollectionPageList({ handlePrevPagination, handleNextPagination, itemEn
                 }
             </ul>
             <div className="pagination">
-                <button onClick={() => handlePrevPagination()}>{'<'}</button>
-                <button onClick={() => handleNextPagination()}>{'>'}</button>
+                {items.map((item, index) =>
+                    <button disabled={index === parseInt(page)} onClick={() => {
+                        history.push(paginationPath.replace(':page', index))
+                    }}>{index}</button>
+                )}
             </div>
         </div>
     )

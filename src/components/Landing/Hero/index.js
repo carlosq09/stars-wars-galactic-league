@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { withRouter } from 'react-router-dom'
 import './index.scss'
 
-const Hero = () => {
+const Hero = ({ history }) => {
 
     return (
         <div className="hero">
@@ -11,11 +12,11 @@ const Hero = () => {
             <p className="hero__text">
                 Explore the galaxy and bring the rebel scum to justice
             </p>
-            <button className="hero__button">
+            <button onClick={() => history.push('/characters/0')}className="hero__button">
                 START HUNT
             </button>
         </div>
     )
 }
 
-export default Hero
+export default withRouter(Hero)
