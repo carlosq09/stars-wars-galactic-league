@@ -7,7 +7,7 @@ import CharacterFilter from '../CharacterFilter'
 import GalacticLeague from "../GalacticLeague";
 import './index.scss'
 
-function Characters({ league, handleAddOrRemoveLeague, initialResults }) {
+function Characters({ handleAddOrRemoveLeague, initialResults }) {
   const [characters, setCharacters] = useState([])
   const [filtered, setFiltered] = useState(null)
   const [index, setIndex] = useState(0)
@@ -47,7 +47,6 @@ function Characters({ league, handleAddOrRemoveLeague, initialResults }) {
         items={filtered ? filtered : [...characters].slice(index, index + 9)}
       />
     </div>
-    <GalacticLeague targets={league} />
   </div>
 }
 

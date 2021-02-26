@@ -2,20 +2,23 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import logic from '../logic'
 import Characters from '../components/Characters'
-import Planets from '../components/Planets'
+import SpecieItem from '../components/SpecieItem'
+import PlanetItem from '../components/PlanetItem'
+import StarshipItem from '../components/StarshipItem'
+import CollectionPage from '../components/CollectionPage'
 import Landing from "../components/Landing";
 import Navbar from "../components/Navbar";
 import Background from '../components/Landing/Background'
+import Video from '../static/videos/Landing.mp4'
 
 import './index.scss'
 
-import Video from '../static/videos/Landing.mp4'
 
 function App() {
   const [results, setResults] = useState([])
   const [league, setLeague] = useState([])
 
-  const handleSetLeague = (character, isAdded) => {
+  const handleSetOrRemoveFromLeague = (character, isAdded) => {
     debugger
     if (isAdded) {
       logic.removeFromLeagueInStorage(character.url)
@@ -39,21 +42,33 @@ function App() {
   }, [])
 
   return <>
-    <Navbar />
-    <Background src={Video}/>
-    <div className="main-sidebar">
-      <Switch>
-        <Route exact path="/" render={() => <Landing />} />
-        <Route exact path="/planets" render={() => <Planets />} />
-        <Route exact path="/characters" render={() =>
-          <Characters
-            league={league}
-            handleAddOrRemoveLeague={handleSetLeague}
-            initialResults={results}
-          />}
-        />
-      </Switch>
-    </div>
+    <Navbar
+      handleSetOrRemoveFromLeague={handleSetOrRemoveFromLeague}
+      league={league}
+    />
+    <Background src={Video} />
+    <Switch>
+      <Route exact path="/" render={() => <Landing />} />
+      <Route exact path="/planets" render={() => <CollectionPage
+        getItemsFunction={logic.requestAllPlanets}
+        itemEntity={PlanetItem} />} />
+        
+      <Route exact path="/species" render={() => <CollectionPage
+        getItemsFunction={logic.requestAllSpecies}
+        itemEntity={SpecieItem} />} />
+
+      <Route exact path="/starships" render={() => <CollectionPage
+        getItemsFunction={logic.requestAllStarships}
+        itemEntity={StarshipItem} />} />
+
+      <Route exact path="/characters" render={() =>
+        <Characters
+          league={league}
+          handleAddOrRemoveLeague={handleSetOrRemoveFromLeague}
+          initialResults={results}
+        />}
+      />
+    </Switch>
   </>
 
 }

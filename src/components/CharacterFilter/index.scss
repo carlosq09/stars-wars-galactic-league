@@ -5,7 +5,6 @@
     align-items: center;
     justify-content: center;
     height: 5vh;
-    width: 80vw;
 }
 
 select {
@@ -47,3 +46,10 @@ select {
    select option {
     font-weight:normal;
    }
+
+   
+@media only screen and (max-width: 768px) {
+    select {
+        width: 30vw;
+    }
+}

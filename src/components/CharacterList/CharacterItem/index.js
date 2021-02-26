@@ -66,28 +66,34 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
   return <li className="card">
     <div className="card__header">
       <h2>{character.name}</h2>
-      <div onClick={() => AddToGalactic()}><Logo stroke={isTarget ? '#0ff' : '#173131'} /></div>
     </div>
-    {specie && <div className="character-specie">
-      <h3>Specie:</h3>
-      <p>{specie}</p>
-    </div>}
-    <p><strong>Height: </strong>{character.height}</p>
-    <p><strong>Birth Year: </strong>{character.birth_year}</p>
-    <p><strong>Gender: </strong>{character.gender}</p>
-    {planet && <p><strong>Homeworld: </strong>{planet}</p>}
-    {starship.length > 0 && <div className="character-starships">
-      <h3>StarShips:</h3>
-      <ul>
-        {starship.map(starship => <li>{starship}</li>)}
-      </ul>
-    </div>}
-    {vehicles.length > 0 && <div className="character-vehicles">
-      <h3>Vehicles:</h3>
-      <ul>
-        {vehicles.map(vehicle => <li>{vehicle}</li>)}
-      </ul>
-    </div>}
+    <div className="card__split">
+      <div className="card__content">
+        {specie && <p><strong>Specie: </strong>{specie}</p>}
+        <p><strong>Height: </strong>{character.height}</p>
+        <p><strong>Birth Year: </strong>{character.birth_year}</p>
+        <p><strong>Gender: </strong>{character.gender}</p>
+        {planet && <p><strong>Homeworld: </strong>{planet}</p>}
+      </div>
+      <div className="card__toggle" onClick={() => AddToGalactic()}>
+        <p>league status</p>
+        <Logo  stroke={isTarget ? '#0ff' : '#173131'} />
+      </div>
+    </div>
+    <div className="card__list">
+      {starship.length > 0 && <div className="card_starships">
+        <h3>StarShips:</h3>
+        <ul>
+          {starship.map(starship => <li>{starship}</li>)}
+        </ul>
+      </div>}
+      {vehicles.length > 0 && <div className="character-vehicles">
+        <h3>Vehicles:</h3>
+        <ul>
+          {vehicles.map(vehicle => <li>{vehicle}</li>)}
+        </ul>
+      </div>}
+    </div>
   </li>
 }
 

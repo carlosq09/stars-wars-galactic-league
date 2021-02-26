@@ -1,8 +1,8 @@
-.characters-pagination{
+.collection-list-pagination{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    height: 85vh;
+    height: 90vh;
     -ms-overflow-style: none;
     scrollbar-width: none;  
     overflow: scroll;
@@ -10,13 +10,13 @@
     margin-bottom: 0;
 }
 
-.character-list{
+.collection-list{
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.characters-pagination::-webkit-scrollbar{
+.collection-list-pagination::-webkit-scrollbar{
     display: none;
 }
