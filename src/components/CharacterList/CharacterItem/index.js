@@ -60,8 +60,9 @@ function ItemCharacter({ handleAddOrRemoveLeague, character }) {
   }, [character])
 
   const AddToGalactic = () => {
-    handleAddOrRemoveLeague(character, isTarget)
-    setIsTarget(!isTarget)
+    const status = handleAddOrRemoveLeague(character, isTarget)
+    debugger
+    setIsTarget(status)
   }
 
   return <li className="card">

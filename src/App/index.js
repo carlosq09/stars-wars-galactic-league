@@ -19,13 +19,18 @@ function App() {
   const [league, setLeague] = useState([])
 
   const handleSetOrRemoveFromLeague = (character, isAdded) => {
-    if (isAdded) {
+
+    if (!isAdded) {
+      if (league.length < 10) {
+        logic.setToLeagueInStorage(character.url)
+        setLeague([...league, character])
+        return true
+      }
+    } else {
       logic.removeFromLeagueInStorage(character.url)
       setLeague(league.filter(target => target.url !== character.url))
-    } else {
-      logic.setToLeagueInStorage(character.url)
-      setLeague([...league, character])
     }
+    return false
   }
 
   useEffect(() => {
@@ -47,7 +52,6 @@ function App() {
     />
     <Background src={Video} />
     <Switch>
-      <Route exact path="/" render={() => <Landing />} />
       <Route exact path="/planets/:page" render={() => <CollectionPage
         getItemsFunction={logic.requestAllPlanets}
         itemEntity={PlanetItem} />} />
@@ -67,6 +71,9 @@ function App() {
           initialResults={results}
         />}
       />
+      <Route component={Landing} />
+
+
     </Switch>
   </>
 

@@ -5,6 +5,10 @@
     height: 80vh;
 }
 
+.characters-page__characters{
+    width: 100vw;
+}
+
 .pagination{
     display: flex;
     justify-content: center;
@@ -13,8 +17,9 @@
 
 .pagination button{
     display: flex;
+    font-family: monospace;
     justify-content: center;
-    height: 5vh;
+    height: 20px;
     margin-left: 2vw;
     margin-right: 2vw;
     border: 1px solid #0ff;

@@ -1,37 +1,4 @@
-const multiFetch = async (times, startIndex = 1, end = 100) => {
-    const elementsArray = []
-    for (let i = 0; i < times; i++) {
-        if (startIndex < end) {
-            elementsArray.push(fetch(`https://swapi.dev/api/people/${startIndex + i}/`)
-                .then(response => {
-                    return response.json().then((data) => data);
-                }))
-        }
-    }
-
-    return Promise.all(elementsArray)
-}
-
-const recursiveFetchByPage = async (uri, paginated, elementsArray = [], index = 1) => {
-    return fetch(`${uri}?page=${index}`)
-        .then(response => {
-            return response.json().then((response) => {
-                if (response.results) {
-                    if (paginated) {
-                        elementsArray = [...elementsArray, response.results]
-                    } else {
-                        elementsArray = [...elementsArray, ...response.results]
-                    }
-                }
-                if (!!response.next) {
-                    return recursiveFetchByPage(uri, paginated, elementsArray, ++index)
-                } else {
-                    return elementsArray
-                }
-            });
-        })
-}
-
+import { recursiveFetchByPage } from '../common/utils'
 
 const logic = {
 
@@ -52,8 +19,10 @@ const logic = {
 
         const storedTargets = JSON.parse(localStorage.getItem('galactic')) || [] //if empty
 
-        storedTargets.push(target)
-        localStorage.setItem('galactic', JSON.stringify(storedTargets))
+        if(storedTargets.length <= 10){
+            storedTargets.push(target)
+            localStorage.setItem('galactic', JSON.stringify(storedTargets))
+        }
 
         return storedTargets
     },
@@ -67,12 +36,6 @@ const logic = {
 
         debugger
         return storedTargets.map(storedTarget => allResults.find(target => target.url === storedTarget))
-    },
-
-    async requestTargets(fetchNumber, elements = [], totalPages) {
-        const newTargets = await multiFetch(fetchNumber, elements.length || 1, totalPages).then(results => results)
-
-        return [...elements, ...newTargets]
     },
 
     async requestAllTargets(paginated) {
@@ -102,9 +65,9 @@ const logic = {
     },
 
     characterIsSpecie(specie, toCompare) {
-        if (!specie.length && toCompare == 'http://swapi.dev/api/species/1/') return true //Humans from the API doesnt have specie for unknow reason
+        if (!specie.length || toCompare == 'http://swapi.dev/api/species/1/') return true //Human characters from the API doesnt have specie
 
-        return specie[0] == toCompare
+        return specie[0] === toCompare
 
     },
 
