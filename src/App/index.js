@@ -1,12 +1,12 @@
 import { Route, Switch, withRouter } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import logic from '../logic'
-import Characters from '../components/Characters'
+import Characters from '../views/Characters'
 import SpecieItem from '../components/SpecieItem'
 import PlanetItem from '../components/PlanetItem'
 import StarshipItem from '../components/StarshipItem'
-import CollectionPage from '../components/CollectionPage'
-import Landing from "../components/Landing";
+import CollectionPage from '../views/CollectionPage'
+import Landing from "../views/Landing";
 import Navbar from "../components/Navbar";
 import Background from '../components/Background'
 import Video from '../static/videos/Landing.mp4'

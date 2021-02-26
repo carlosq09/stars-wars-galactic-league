@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, useParams } from 'react-router-dom'
 import logic from '../../logic'
-import CharacterList from '../CharacterList'
-import CharacterFilter from '../CharacterFilter'
+import CharacterList from './CharacterList'
+import CharacterFilter from './CharacterFilter'
 
 import './index.scss'
 

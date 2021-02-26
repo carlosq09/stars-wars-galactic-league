@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import logic from '../../logic'
+import logic from '../../../logic'
 import './index.scss'
 
 function CharacterFilter({ handleFilter }) {

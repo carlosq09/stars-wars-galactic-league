@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, useParams } from 'react-router-dom'
-import CollectionPageList from '../CollectionPageList'
+import CollectionPageList from './CollectionPageList'
 import './index.scss'
 
 function CollectionPage({ getItemsFunction, itemEntity, match:{ path:paginationPath} }) {

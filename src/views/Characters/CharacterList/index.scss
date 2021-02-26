@@ -20,3 +20,14 @@
 .characters-pagination::-webkit-scrollbar{
     display: none;
 }
+
+
+.pagination button{
+    font-family: monospace;
+    justify-content: center;
+    height: 5vh;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #0ff;
+    background: #0ff
+}

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import logic from '../../logic'
-import ItemCharacter from './CharacterItem'
+import logic from '../../../logic'
+import ItemCharacter from '../CharacterItem'
 import './index.scss'
 
 function CharacterList({ handleAddOrRemoveLeague, history, totalItems, filtered, items, page }) {
