@@ -65,7 +65,7 @@ const logic = {
     },
 
     characterIsSpecie(specie, toCompare) {
-        if (!specie.length || toCompare == 'http://swapi.dev/api/species/1/') return true //Human characters from the API doesnt have specie
+        if (!specie.length && toCompare == 'http://swapi.dev/api/species/1/') return true //Human characters from the API doesnt have specie
 
         return specie[0] === toCompare
 
@@ -85,6 +85,8 @@ const logic = {
 
         if (!planet && !specie && !starship) return characters
         return characters.filter(character => {
+
+            debugger
 
             if (starship && (!this.characterHasStarship(character.starships, starship))) return
             if (specie && (!this.characterIsSpecie(character.species, specie))) return
